@@ -1,5 +1,5 @@
 {
-  "name": "nomiscz/flarum-ext-auth-wechat",
+  "name": "hamzone/flarum-ext-auth-wechat",
   "description": "Allow users to log in with WeChat",
   "keywords": [
     "flarum",

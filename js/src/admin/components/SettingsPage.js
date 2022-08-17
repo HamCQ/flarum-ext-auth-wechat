@@ -34,6 +34,25 @@ export default class SettingsPage extends ExtensionPage {
                             {app.translator.trans(`${config.module.name}.admin.settings.api_app_secret`)}
                         </StringItem>
                     </div>
+
+                    <div className="Form-group">
+                        <StringItem
+                            name={`${config.package.name}.mp_app_id`}
+                            setting={this.setting}
+                            {...{ ['required']: true }}
+                        >
+                            {app.translator.trans(`${config.module.name}.admin.settings.api_mp_app_id`)}
+                        </StringItem>
+                    </div>
+                    <div className="Form-group">
+                        <StringItem
+                            name={`${config.package.name}.mp_app_secret`}
+                            setting={this.setting}
+                            {...{ ['required']: true }}
+                        >
+                            {app.translator.trans(`${config.module.name}.admin.settings.api_mp_app_secret`)}
+                        </StringItem>
+                    </div>
                     {this.submitButton()}
                 </div>
             </div>
