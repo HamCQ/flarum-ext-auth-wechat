@@ -57,7 +57,7 @@ class WeChatAuthController implements RequestHandlerInterface
     public function handle(Request $request): ResponseInterface
     {
         $redirectUri = $this->url->to('forum')->route('auth.wechat');
-
+        app('log')->debug($redirectUri );
         // if($this->isMobile()){
             $provider = new WeChatOffical([
                 'appid' => $this->settings->get('flarum-ext-auth-wechat.mp_app_id'),
@@ -77,9 +77,10 @@ class WeChatAuthController implements RequestHandlerInterface
         $code = array_get($queryParams, 'code');
 
         if (!$code) {
-
+            app('log')->debug("!code");
             $authUrl = $provider->getAuthorizationUrl();
             $session->put('oauth2state', $provider->getState());
+            app('log')->debug($authUrl );
             return new RedirectResponse($authUrl . '#wechat_redirect');
             // return new RedirectResponse($authUrl . '&display=popup');
         }

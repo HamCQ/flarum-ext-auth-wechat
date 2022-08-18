@@ -63,6 +63,7 @@ class WeChatLinkController implements RequestHandlerInterface
         }
 
         $redirectUri = $this->url->to('api')->route('auth.wechat.api.link');
+        app('log')->debug($redirectUri);
 
         // if($this->isMobile()){
             $provider = new WeChatOffical([
@@ -84,9 +85,11 @@ class WeChatLinkController implements RequestHandlerInterface
         $code = array_get($queryParams, 'code');
 
         if (!$code) {
+            app('log')->debug("!code");
 
             $authUrl = $provider->getAuthorizationUrl();
             $session->put('oauth2state', $provider->getState());
+            app('log')->debug($authUrl);
             return new RedirectResponse($authUrl . '#wechat_redirect');
         }
 
