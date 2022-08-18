@@ -87,7 +87,7 @@ class WeChatLinkController implements RequestHandlerInterface
 
             $authUrl = $provider->getAuthorizationUrl();
             $session->put('oauth2state', $provider->getState());
-            return new RedirectResponse($authUrl . '&display=popup');
+            return new RedirectResponse($authUrl . '#wechat_redirect');
         }
 
         $state = array_get($queryParams, 'state');
