@@ -60,7 +60,7 @@ class WeChatAuthController implements RequestHandlerInterface
         app('log')->debug( $redirectUri );
         app('log')->debug( $_SERVER['HTTP_USER_AGENT'] );
 
-        if($this->isMobile()){
+        if(strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false){
             app('log')->debug("isMobile()");
             $provider = new WeChatOffical([
                 'appid' => $this->settings->get('flarum-ext-auth-wechat.mp_app_id'),
@@ -115,16 +115,16 @@ class WeChatAuthController implements RequestHandlerInterface
         );
     }
 
-    public  function isMobile() {
-        if (isset($_SERVER['HTTP_X_WAP_PROFILE'])) {
-            return true;
-        }
-        if (isset($_SERVER['HTTP_VIA'])) {
-            // 找不到为flase,否则为true
-            return stristr($_SERVER['HTTP_VIA'], "wap") ? true : false;
-        }
-        if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { 
-            return true; 
-        }
-    }
+    // public  function isMobile() {
+    //     if (isset($_SERVER['HTTP_X_WAP_PROFILE'])) {
+    //         return true;
+    //     }
+    //     if (isset($_SERVER['HTTP_VIA'])) {
+    //         // 找不到为flase,否则为true
+    //         return stristr($_SERVER['HTTP_VIA'], "wap") ? true : false;
+    //     }
+    //     if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { 
+    //         return true; 
+    //     }
+    // }
 }
