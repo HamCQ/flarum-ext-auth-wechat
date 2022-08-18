@@ -39,7 +39,7 @@ export default class SettingsPage extends ExtensionPage {
                         <StringItem
                             name={`${config.package.name}.mp_app_id`}
                             setting={this.setting}
-                            {...{ ['required']: true }}
+                            {...{ ['required']: false }}
                         >
                             {app.translator.trans(`${config.module.name}.admin.settings.api_mp_app_id`)}
                         </StringItem>
@@ -48,7 +48,7 @@ export default class SettingsPage extends ExtensionPage {
                         <StringItem
                             name={`${config.package.name}.mp_app_secret`}
                             setting={this.setting}
-                            {...{ ['required']: true }}
+                            {...{ ['required']: false }}
                         >
                             {app.translator.trans(`${config.module.name}.admin.settings.api_mp_app_secret`)}
                         </StringItem>

@@ -28,7 +28,7 @@
   },
   "extra": {
     "flarum-extension": {
-      "title": "NomisCZ WeChat Login",
+      "title": "HamZone WeChat Login",
       "icon": {
         "name": "fab fa-weixin",
         "backgroundColor": "#51c332",

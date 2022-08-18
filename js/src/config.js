@@ -1,6 +1,6 @@
 export default {
   module: {
-    name: 'nomiscz-auth-wechat',
+    name: 'hamzone-auth-wechat',
     id: 'WeChatAuth',
     icon: 'fab fa-weixin'
   },
