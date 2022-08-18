@@ -78,7 +78,8 @@ class WeChatLinkController implements RequestHandlerInterface
         //         'redirect_uri' => $redirectUri,
         //     ]);
         // }
-        
+       
+        app('log')->debug( $_SERVER['HTTP_USER_AGENT'] );
 
         $session = $request->getAttribute('session');
         $queryParams = $request->getQueryParams();
@@ -102,13 +103,16 @@ class WeChatLinkController implements RequestHandlerInterface
         }
 
         $token = $provider->getAccessToken('authorization_code', compact('code'));
+        app('log')->debug($token);
         /** @var WeChatResourceOwner $user */
         $user = $provider->getResourceOwner($token);
+        app('log')->debug($user->getId());
 
         if ($this->checkLoginProvider($user->getId())) {
+            app('log')->debug("checkLoginProvider");
             return $this->makeResponse('already_used');
         }
-
+        app('log')->debug("loginProviders");
         $created = $actor->loginProviders()->create([
             'provider' => 'wechat',
             'identifier' => $user->getId()
