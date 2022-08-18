@@ -102,7 +102,7 @@ class WeChatAuthController implements RequestHandlerInterface
 
         return $this->response->make(
             'wechat',
-            $user->getId(),
+            $user->getUnionId(),
             function (Registration $registration) use ($user) {
                 $registration
                     ->suggestUsername($user->getNickname())

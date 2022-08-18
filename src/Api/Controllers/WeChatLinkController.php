@@ -107,16 +107,16 @@ class WeChatLinkController implements RequestHandlerInterface
         app('log')->debug($token);
         /** @var WeChatResourceOwner $user */
         $user = $provider->getResourceOwner($token);
-        app('log')->debug($user->getId());
+        app('log')->debug($user->getUnionId());
 
-        if ($this->checkLoginProvider($user->getId())) {
+        if ($this->checkLoginProvider($user->getUnionId())) {
             app('log')->debug("checkLoginProvider");
             return $this->makeResponse('already_used');
         }
         app('log')->debug("loginProviders");
         $created = $actor->loginProviders()->create([
             'provider' => 'wechat',
-            'identifier' => $user->getId()
+            'identifier' => $user->getUnionId()
         ]);
 
         return $this->makeResponse($created ? 'done' : 'error');
