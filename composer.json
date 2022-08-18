@@ -12,7 +12,7 @@
     "flarum/core": "^1.0.0",
     "laravel/helpers": "^v1.4.1",
     "fof/components": "^1.0.0",
-    "nomiscz/oauth2-wechat": "^0.1.1"
+    "hamzone/oauth2-wechat": "^1.0"
   },
   "authors": [
     {

@@ -21,6 +21,7 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Flarum\User\LoginProvider;
 use Flarum\Http\UrlGenerator;
 use Flarum\Settings\SettingsRepositoryInterface;
+use NomisCZ\OAuth2\Client\Provider\WeChatOffical;
 
 class WeChatLinkController implements RequestHandlerInterface
 {
@@ -63,11 +64,20 @@ class WeChatLinkController implements RequestHandlerInterface
 
         $redirectUri = $this->url->to('api')->route('auth.wechat.api.link');
 
-        $provider = new WeChat([
-            'appid' => $this->settings->get('flarum-ext-auth-wechat.app_id'),
-            'secret' => $this->settings->get('flarum-ext-auth-wechat.app_secret'),
-            'redirect_uri' => $redirectUri,
-        ]);
+        if($this->isMobile()){
+            $provider = new WeChatOffical([
+                'appid' => $this->settings->get('flarum-ext-auth-wechat.mp_app_id'),
+                'secret' => $this->settings->get('flarum-ext-auth-wechat.mp_app_secret'),
+                'redirect_uri' => $redirectUri,
+            ]);
+        }else{
+            $provider = new WeChat([
+                'appid' => $this->settings->get('flarum-ext-auth-wechat.app_id'),
+                'secret' => $this->settings->get('flarum-ext-auth-wechat.app_secret'),
+                'redirect_uri' => $redirectUri,
+            ]);
+        }
+        
 
         $session = $request->getAttribute('session');
         $queryParams = $request->getQueryParams();
@@ -118,4 +128,18 @@ class WeChatLinkController implements RequestHandlerInterface
             ['identifier', $identifier]
         ])->exists();
     }
+
+    public  function isMobile() {
+        if (isset($_SERVER['HTTP_X_WAP_PROFILE'])) {
+            return true;
+        }
+        if (isset($_SERVER['HTTP_VIA'])) {
+            // 找不到为flase,否则为true
+            return stristr($_SERVER['HTTP_VIA'], "wap") ? true : false;
+        }
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { 
+            return true; 
+        }
+    }
+
 }

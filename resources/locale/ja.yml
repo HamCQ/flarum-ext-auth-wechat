@@ -26,3 +26,5 @@ hamzone-auth-wechat:
       title: WeChat ログイン - 設定
       api_app_id: API App ID
       api_app_secret: API App Secret
+      api_mp_app_id: Official Account App ID
+      api_mp_app_secret: Official Account App Secret
