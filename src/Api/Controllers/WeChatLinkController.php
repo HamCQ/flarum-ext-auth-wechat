@@ -147,7 +147,7 @@ class WeChatLinkController implements RequestHandlerInterface
             app('log')->debug("checkLoginProvider");
             return $this->makeResponse('already_used');
         }
-        app('log')->debug("loginProviders");
+
         $created = $actor->loginProviders()->create([
             'provider' => 'wechat',
             'identifier' => $user->getUnionId()
@@ -171,7 +171,7 @@ class WeChatLinkController implements RequestHandlerInterface
     private function makeWXResponse($returnCode = 'done'): HtmlResponse
     {
         app('log')->info("makeWXResponse");
-        $content = "<script>window.opener.app.wechat.linkDone('{$returnCode}');</script>";
+        $content = "<script>window.location.href ='https://bbs.hamzone.cn/settings'</script>";
 
         return new HtmlResponse($content);
     }
