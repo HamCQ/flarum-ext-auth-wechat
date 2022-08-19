@@ -131,6 +131,7 @@ class WeChatAuthController implements RequestHandlerInterface
         $user = $provider->getResourceOwner($token);
 
         if($isMobile){
+            app('log')->debug("isMobileXX");
             $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 
             return $this->response->make(

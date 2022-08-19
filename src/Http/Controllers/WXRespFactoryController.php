@@ -51,6 +51,8 @@ class WXRespFactoryController extends ResponseFactory{
 
         $token = RegistrationToken::generate($provider, $identifier, $provided, $registration->getPayload());
         $token->save();
+        app('log')->debug($isMobile);
+        app('log')->debug($url);
         if($isMobile){
             return $this->makeWXResponse(array_merge(
                 $provided,
@@ -73,6 +75,7 @@ class WXRespFactoryController extends ResponseFactory{
 
     private function makeResponse(array $payload): HtmlResponse
     {
+        app('log')->debug("makeResponse");
         $content = sprintf(
             '<script>window.close(); window.opener.app.authenticationComplete(%s);</script>',
             json_encode($payload)
