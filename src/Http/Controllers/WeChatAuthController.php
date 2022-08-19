@@ -58,7 +58,7 @@ class WeChatAuthController implements RequestHandlerInterface
     public function handle(Request $request): ResponseInterface
     {
         $redirectUri = $this->url->to('forum')->route('auth.wechat');
-        app('log')->debug( $redirectUri );
+        app('log')->debug( $request->getAttribute('baseUrl') );
         app('log')->debug( $_SERVER['HTTP_USER_AGENT'] );
         $isMobile = false;
         //微信客户端内
