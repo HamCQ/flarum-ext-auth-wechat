@@ -162,6 +162,7 @@ class WeChatLinkController implements RequestHandlerInterface
 
     private function makeResponse($returnCode = 'done'): HtmlResponse
     {
+        app('log')->info("makeResponse");
         $content = "<script>window.close();window.opener.app.wechat.linkDone('{$returnCode}');</script>";
 
         return new HtmlResponse($content);
@@ -169,6 +170,7 @@ class WeChatLinkController implements RequestHandlerInterface
 
     private function makeWXResponse($returnCode = 'done'): HtmlResponse
     {
+        app('log')->info("makeWXResponse");
         $content = "<script>window.opener.app.wechat.linkDone('{$returnCode}');</script>";
 
         return new HtmlResponse($content);
