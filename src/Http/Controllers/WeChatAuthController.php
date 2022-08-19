@@ -131,6 +131,8 @@ class WeChatAuthController implements RequestHandlerInterface
         $user = $provider->getResourceOwner($token);
 
         if($isMobile){
+            $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+
             return $this->response->make(
                 'wechat',
                 $user->getUnionId(),
@@ -142,7 +144,9 @@ class WeChatAuthController implements RequestHandlerInterface
                     if ($user->getHeadImgUrl()) {
                         $registration->provideAvatar($user->getHeadImgUrl());
                     }
-                }
+                },
+                $isMobile,
+                $protocol.$_SERVER['HTTP_HOST']
             );
         }
 

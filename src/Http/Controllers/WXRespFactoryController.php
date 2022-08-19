@@ -27,7 +27,13 @@ class WXRespFactoryController extends ResponseFactory{
         $this->rememberer = $rememberer;
     }
 
-    public function make(string $provider, string $identifier, callable $configureRegistration): ResponseInterface
+    public function make(
+        string $provider, 
+        string $identifier, 
+        callable $configureRegistration,
+        bool $isMobile = false,
+        string $url = ""
+        ): ResponseInterface
     {
         if ($user = LoginProvider::logIn($provider, $identifier)) {
             return $this->makeLoggedInResponse($user);
@@ -45,7 +51,16 @@ class WXRespFactoryController extends ResponseFactory{
 
         $token = RegistrationToken::generate($provider, $identifier, $provided, $registration->getPayload());
         $token->save();
-
+        if($isMobile){
+            return $this->makeWXResponse(array_merge(
+                $provided,
+                $registration->getSuggested(),
+                [
+                    'token' => $token->token,
+                    'provided' => array_keys($provided)
+                ]
+            ), $url);
+        }
         return $this->makeResponse(array_merge(
             $provided,
             $registration->getSuggested(),
@@ -58,12 +73,21 @@ class WXRespFactoryController extends ResponseFactory{
 
     private function makeResponse(array $payload): HtmlResponse
     {
-        app('log')->debug("WXRespFactory makeResponse");
         $content = sprintf(
             '<script>window.close(); window.opener.app.authenticationComplete(%s);</script>',
             json_encode($payload)
         );
+        return new HtmlResponse($content);
+    }
 
+    private function makeWXResponse(array $payload, $url): HtmlResponse
+    {
+
+        $content = sprintf(
+            '<script>window.opener.app.authenticationComplete(%s);</script>',
+            json_encode($payload)
+        );
+        $content .= "<script>window.location.href ='".$url."'</script>";
         return new HtmlResponse($content);
     }
 
