@@ -1,23 +1,8 @@
-# NomisCZ WeChat Login
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/nomiscz/flarum-ext-auth-wechat.svg)](https://packagist.org/packages/nomiscz/flarum-ext-auth-wechat)
+基于 https://github.com/NomisCZ/flarum-ext-auth-wechat 项目进行二次修改，支持移动端微信登录跳转，桌面端依旧支持二维码扫码登录  
 
-A [Flarum](http://flarum.org) extension. Allow users to log in with WeChat
+需要额外配置公众号APP_ID, APP_SEC  
 
-### Installation
+安装方式：  
 
-Use [Bazaar](https://discuss.flarum.org/d/5151-flagrow-bazaar-the-extension-marketplace) or install manually with composer:
-
-```sh
-composer require nomiscz/flarum-ext-auth-wechat
-```
-
-### Updating
-
-```sh
-composer update nomiscz/flarum-ext-auth-wechat
-```
-
-### Links
-
-- [Packagist](https://packagist.org/packages/nomiscz/flarum-ext-auth-wechat)
+composer require hamzone/flarum-ext-auth-wechat
