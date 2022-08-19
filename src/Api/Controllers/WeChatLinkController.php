@@ -63,7 +63,7 @@ class WeChatLinkController implements RequestHandlerInterface
         }
 
         $redirectUri = $this->url->to('api')->route('auth.wechat.api.link');
-        app('log')->debug( $_SERVER['HTTP_HOST'] );
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
         app('log')->debug( $redirectUri );
         app('log')->debug( $_SERVER['HTTP_USER_AGENT'] );
         $isMobile = false;
@@ -155,7 +155,7 @@ class WeChatLinkController implements RequestHandlerInterface
         ]);
 
         if($isMobile){
-            return $this->makeWXResponse($created ? 'done' : 'error');
+            return $this->makeWXResponse($protocol.$_SERVER['HTTP_HOST']);
         }
 
         return $this->makeResponse($created ? 'done' : 'error');
@@ -169,13 +169,13 @@ class WeChatLinkController implements RequestHandlerInterface
         return new HtmlResponse($content);
     }
 
-    private function makeWXResponse(): HtmlResponse
+    private function makeWXResponse($url): HtmlResponse
     {
         // app('log')->info("makeWXResponse");
         $content = `<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
         绑定成功，正在跳转......`
         ;
-        $content .= "<script>window.location.href ='https://bbs.hamzone.cn/settings'</script>";
+        $content .= "<script>window.location.href ='".$url."/settings'</script>";
 
         return new HtmlResponse($content);
     }

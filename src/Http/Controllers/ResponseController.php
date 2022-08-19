@@ -13,7 +13,7 @@ use Illuminate\Support\Arr;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;
 
-class WXRespFactory extends ResponseFactory{
+class WXRespFactoryController extends ResponseFactory{
 /**
      * @var Rememberer
      */
