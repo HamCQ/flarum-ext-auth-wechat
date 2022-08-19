@@ -144,7 +144,7 @@ class WeChatLinkController implements RequestHandlerInterface
         app('log')->debug($user->getUnionId());
 
         if ($this->checkLoginProvider($user->getUnionId())) {
-            app('log')->debug("checkLoginProvider");
+            // app('log')->debug("checkLoginProvider");
             return $this->makeResponse('already_used');
         }
 
@@ -162,16 +162,19 @@ class WeChatLinkController implements RequestHandlerInterface
 
     private function makeResponse($returnCode = 'done'): HtmlResponse
     {
-        app('log')->info("makeResponse");
+        // app('log')->info("makeResponse");
         $content = "<script>window.close();window.opener.app.wechat.linkDone('{$returnCode}');</script>";
 
         return new HtmlResponse($content);
     }
 
-    private function makeWXResponse($returnCode = 'done'): HtmlResponse
+    private function makeWXResponse(): HtmlResponse
     {
-        app('log')->info("makeWXResponse");
-        $content = "<script>window.location.href ='https://bbs.hamzone.cn/settings'</script>";
+        // app('log')->info("makeWXResponse");
+        $content = `<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+        绑定成功，正在跳转......`
+        ;
+        $content .= "<script>window.location.href ='https://bbs.hamzone.cn/settings'</script>";
 
         return new HtmlResponse($content);
     }

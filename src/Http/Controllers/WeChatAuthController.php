@@ -59,18 +59,18 @@ class WeChatAuthController implements RequestHandlerInterface
         $redirectUri = $this->url->to('forum')->route('auth.wechat');
         app('log')->debug( $redirectUri );
         app('log')->debug( $_SERVER['HTTP_USER_AGENT'] );
-
+        $isMobile = false;
         //微信客户端内
         if( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ){
+            $isMobile = true;
             app('log')->debug("wechatBrowser");
             $provider = new WeChatOffical([
                 'appid' => $this->settings->get('flarum-ext-auth-wechat.mp_app_id'),
                 'secret' => $this->settings->get('flarum-ext-auth-wechat.mp_app_secret'),
                 'redirect_uri' => $redirectUri,
             ]);
-        }else{
 
-            $isMobile = false;
+        }else{
             if (isset($_SERVER['HTTP_X_WAP_PROFILE'])) {
                 $isMobile = true;
             }
@@ -128,6 +128,23 @@ class WeChatAuthController implements RequestHandlerInterface
         $token = $provider->getAccessToken('authorization_code', compact('code'));
         /** @var WeChatResourceOwner $user */
         $user = $provider->getResourceOwner($token);
+
+        if($isMobile){
+            $this->response->make(
+                'wechat',
+                $user->getUnionId(),
+                function (Registration $registration) use ($user) {
+                    $registration
+                        ->suggestUsername($user->getNickname())
+                        ->setPayload($user->toArray());
+    
+                    if ($user->getHeadImgUrl()) {
+                        $registration->provideAvatar($user->getHeadImgUrl());
+                    }
+                }
+            );
+            return new RedirectResponse("https://bbs.hamzone.cn");
+        }
 
         return $this->response->make(
             'wechat',
