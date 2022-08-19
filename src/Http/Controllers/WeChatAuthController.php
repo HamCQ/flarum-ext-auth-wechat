@@ -12,8 +12,9 @@
 namespace NomisCZ\WeChatAuth\Http\Controllers;
 
 use Exception;
+use NomisCZ\WeChatAuth\Http\Controllers\WXRespFactory;
+
 use Flarum\Forum\Auth\Registration;
-use Flarum\Forum\Auth\ResponseFactory;
 use Flarum\Http\UrlGenerator;
 use Flarum\Settings\SettingsRepositoryInterface;
 use NomisCZ\OAuth2\Client\Provider\WeChat;
@@ -43,7 +44,7 @@ class WeChatAuthController implements RequestHandlerInterface
      * @param SettingsRepositoryInterface $settings
      * @param UrlGenerator $url
      */
-    public function __construct(ResponseFactory $response, SettingsRepositoryInterface $settings, UrlGenerator $url)
+    public function __construct(WXRespFactory $response, SettingsRepositoryInterface $settings, UrlGenerator $url)
     {
         $this->response = $response;
         $this->settings = $settings;
@@ -130,7 +131,7 @@ class WeChatAuthController implements RequestHandlerInterface
         $user = $provider->getResourceOwner($token);
 
         if($isMobile){
-            $this->response->make(
+            return $this->response->make(
                 'wechat',
                 $user->getUnionId(),
                 function (Registration $registration) use ($user) {
@@ -143,7 +144,6 @@ class WeChatAuthController implements RequestHandlerInterface
                     }
                 }
             );
-            return new RedirectResponse("https://bbs.hamzone.cn");
         }
 
         return $this->response->make(
