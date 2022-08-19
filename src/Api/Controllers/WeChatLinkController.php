@@ -65,9 +65,11 @@ class WeChatLinkController implements RequestHandlerInterface
         $redirectUri = $this->url->to('api')->route('auth.wechat.api.link');
         app('log')->debug( $redirectUri );
         app('log')->debug( $_SERVER['HTTP_USER_AGENT'] );
+        $isMobile = false;
 
         //微信客户端内
         if( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ){
+            $isMobile = true;
 
             app('log')->debug("wechatBrowser");
             $provider = new WeChatOffical([
@@ -78,7 +80,6 @@ class WeChatLinkController implements RequestHandlerInterface
 
         }else{
 
-            $isMobile = false;
             if (isset($_SERVER['HTTP_X_WAP_PROFILE'])) {
                 $isMobile = true;
             }
@@ -152,12 +153,23 @@ class WeChatLinkController implements RequestHandlerInterface
             'identifier' => $user->getUnionId()
         ]);
 
+        if($isMobile){
+            return $this->makeWXResponse($created ? 'done' : 'error');
+        }
+
         return $this->makeResponse($created ? 'done' : 'error');
     }
 
     private function makeResponse($returnCode = 'done'): HtmlResponse
     {
         $content = "<script>window.close();window.opener.app.wechat.linkDone('{$returnCode}');</script>";
+
+        return new HtmlResponse($content);
+    }
+
+    private function makeWXResponse($returnCode = 'done'): HtmlResponse
+    {
+        $content = "<script>window.opener.app.wechat.linkDone('{$returnCode}');</script>";
 
         return new HtmlResponse($content);
     }
