@@ -29,7 +29,7 @@ use Laminas\Diactoros\Response\RedirectResponse;
 class WeChatAuthController implements RequestHandlerInterface
 {
     /**
-     * @var WXRespFactory
+     * @var WXRespFactoryController
      */
     protected $response;
     /**
@@ -41,7 +41,7 @@ class WeChatAuthController implements RequestHandlerInterface
      */
     protected $url;
     /**
-     * @param WXRespFactory $response
+     * @param WXRespFactoryController $response
      * @param SettingsRepositoryInterface $settings
      * @param UrlGenerator $url
      */
