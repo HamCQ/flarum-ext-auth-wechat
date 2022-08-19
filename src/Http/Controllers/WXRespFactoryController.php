@@ -35,8 +35,11 @@ class WXRespFactoryController extends ResponseFactory{
         string $url = ""
         ): ResponseInterface
     {
+        app('log')->debug($isMobile);
+        app('log')->debug($url);
+
         if ($user = LoginProvider::logIn($provider, $identifier)) {
-            return $this->makeLoggedInResponse($user);
+            return $this->makeLoggedInResponse($user, $isMobile, $url);
         }
 
         $configureRegistration($registration = new Registration);
@@ -46,13 +49,12 @@ class WXRespFactoryController extends ResponseFactory{
         if (! empty($provided['email']) && $user = User::where(Arr::only($provided, 'email'))->first()) {
             $user->loginProviders()->create(compact('provider', 'identifier'));
 
-            return $this->makeLoggedInResponse($user);
+            return $this->makeLoggedInResponse($user, $isMobile, $url);
         }
 
         $token = RegistrationToken::generate($provider, $identifier, $provided, $registration->getPayload());
         $token->save();
-        app('log')->debug($isMobile);
-        app('log')->debug($url);
+      
         if($isMobile){
             app('log')->debug("WXRespFactoryController isMobile");
             return $this->makeWXResponse(array_merge(
@@ -97,9 +99,13 @@ class WXRespFactoryController extends ResponseFactory{
         return new HtmlResponse($content);
     }
 
-    private function makeLoggedInResponse(User $user)
+    private function makeLoggedInResponse(User $user, bool $isMobile = false,string $url = "")
     {
         $response = $this->makeResponse(['loggedIn' => true]);
+
+        if ($isMobile){
+            $response = $this->makeWXResponse(['loggedIn' => true], $url);
+        }
 
         $token = RememberAccessToken::generate($user->id);
 
