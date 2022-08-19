@@ -63,7 +63,7 @@ class WeChatLinkController implements RequestHandlerInterface
         }
 
         $redirectUri = $this->url->to('api')->route('auth.wechat.api.link');
-        app('log')->debug( $request->getAttribute('baseUrl') );
+        app('log')->debug( $_SERVER['HTTP_HOST'] );
         app('log')->debug( $redirectUri );
         app('log')->debug( $_SERVER['HTTP_USER_AGENT'] );
         $isMobile = false;
