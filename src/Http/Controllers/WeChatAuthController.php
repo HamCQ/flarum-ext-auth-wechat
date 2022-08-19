@@ -64,7 +64,6 @@ class WeChatAuthController implements RequestHandlerInterface
         //微信客户端内
         if( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ){
             $isMobile = true;
-            app('log')->debug("wechatBrowser");
             $provider = new WeChatOffical([
                 'appid' => $this->settings->get('flarum-ext-auth-wechat.mp_app_id'),
                 'secret' => $this->settings->get('flarum-ext-auth-wechat.mp_app_secret'),
@@ -110,10 +109,8 @@ class WeChatAuthController implements RequestHandlerInterface
         $code = array_get($queryParams, 'code');
 
         if (!$code) {
-            app('log')->debug("!code");
             $authUrl = $provider->getAuthorizationUrl();
             $session->put('oauth2state', $provider->getState());
-            app('log')->debug($authUrl );
             return new RedirectResponse($authUrl . '#wechat_redirect');
             // return new RedirectResponse($authUrl . '&display=popup');
         }
@@ -131,9 +128,7 @@ class WeChatAuthController implements RequestHandlerInterface
         $user = $provider->getResourceOwner($token);
 
         if($isMobile){
-            app('log')->debug("isMobileXX");
             $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-
             return $this->response->make(
                 'wechat',
                 $user->getUnionId(),

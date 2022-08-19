@@ -64,15 +64,12 @@ class WeChatLinkController implements RequestHandlerInterface
 
         $redirectUri = $this->url->to('api')->route('auth.wechat.api.link');
         $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-        app('log')->debug( $redirectUri );
         app('log')->debug( $_SERVER['HTTP_USER_AGENT'] );
         $isMobile = false;
 
         //微信客户端内
         if( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ){
             $isMobile = true;
-
-            app('log')->debug("wechatBrowser");
             $provider = new WeChatOffical([
                 'appid' => $this->settings->get('flarum-ext-auth-wechat.mp_app_id'),
                 'secret' => $this->settings->get('flarum-ext-auth-wechat.mp_app_secret'),
@@ -122,11 +119,8 @@ class WeChatLinkController implements RequestHandlerInterface
         $code = array_get($queryParams, 'code');
 
         if (!$code) {
-            app('log')->debug("!code");
-
             $authUrl = $provider->getAuthorizationUrl();
             $session->put('oauth2state', $provider->getState());
-            app('log')->debug($authUrl);
             return new RedirectResponse($authUrl . '#wechat_redirect');
         }
 
@@ -139,10 +133,8 @@ class WeChatLinkController implements RequestHandlerInterface
         }
 
         $token = $provider->getAccessToken('authorization_code', compact('code'));
-        app('log')->debug($token);
         /** @var WeChatResourceOwner $user */
         $user = $provider->getResourceOwner($token);
-        app('log')->debug($user->getUnionId());
 
         if ($this->checkLoginProvider($user->getUnionId())) {
             // app('log')->debug("checkLoginProvider");
@@ -163,7 +155,6 @@ class WeChatLinkController implements RequestHandlerInterface
 
     private function makeResponse($returnCode = 'done'): HtmlResponse
     {
-        // app('log')->info("makeResponse");
         $content = "<script>window.close();window.opener.app.wechat.linkDone('{$returnCode}');</script>";
 
         return new HtmlResponse($content);
@@ -171,7 +162,6 @@ class WeChatLinkController implements RequestHandlerInterface
 
     private function makeWXResponse($url): HtmlResponse
     {
-        // app('log')->info("makeWXResponse");
         $content = `<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
         绑定成功，正在跳转......`
         ;

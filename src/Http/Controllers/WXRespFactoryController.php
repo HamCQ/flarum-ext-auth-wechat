@@ -35,9 +35,6 @@ class WXRespFactoryController extends ResponseFactory{
         string $url = ""
         ): ResponseInterface
     {
-        app('log')->debug($isMobile);
-        app('log')->debug($url);
-
         if ($user = LoginProvider::logIn($provider, $identifier)) {
             return $this->makeLoggedInResponse($user, $isMobile, $url);
         }
@@ -56,7 +53,6 @@ class WXRespFactoryController extends ResponseFactory{
         $token->save();
       
         if($isMobile){
-            app('log')->debug("WXRespFactoryController isMobile");
             return $this->makeWXResponse(array_merge(
                 $provided,
                 $registration->getSuggested(),
@@ -66,7 +62,6 @@ class WXRespFactoryController extends ResponseFactory{
                 ]
             ), $url);
         }
-        app('log')->debug("WXRespFactoryController not isMobile");
         return $this->makeResponse(array_merge(
             $provided,
             $registration->getSuggested(),
@@ -79,7 +74,6 @@ class WXRespFactoryController extends ResponseFactory{
 
     private function makeResponse(array $payload): HtmlResponse
     {
-        app('log')->debug("makeResponse");
         $content = sprintf(
             '<script>window.close(); window.opener.app.authenticationComplete(%s);</script>',
             json_encode($payload)
@@ -89,7 +83,6 @@ class WXRespFactoryController extends ResponseFactory{
 
     private function makeWXResponse(array $payload, $url): HtmlResponse
     {
-        app('log')->debug("makeWXResponse");
         $content = sprintf(
             '<script>window.opener.app.authenticationComplete(%s);</script>',
             json_encode($payload)
