@@ -83,11 +83,13 @@ class WXRespFactoryController extends ResponseFactory{
 
     private function makeWXResponse(array $payload, $url): HtmlResponse
     {
-        $content = sprintf(
-            '<script>window.opener.app.authenticationComplete(%s);</script>',
+        $content = "<script>window.location.href ='".$url."'</script>";
+        $content .= sprintf(
+            '
+            <script>window.app.authenticationComplete(%s);</script>
+            ',
             json_encode($payload)
         );
-        // $content .= "<script>window.location.href ='".$url."'</script>";
         return new HtmlResponse($content);
     }
 
