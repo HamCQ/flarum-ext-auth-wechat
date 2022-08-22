@@ -84,9 +84,18 @@ class WXRespFactoryController extends ResponseFactory{
     private function makeWXResponse(array $payload, $url): HtmlResponse
     {
         // $content = "<script>window.location.href ='".$url."'</script>";
+        /**
+         * 
+         * <script>window.app.
+         * authenticationComplete({"avatar_url":"https:\/\/thirdwx.qlogo.cn\/mmopen\/vi_32\/Q
+         * 0j4TwGTfTJuaj6ianQAAHduCONwwzuEUT1chXpC9ib2NQruvBicbzQJjwJsXz9ibAhxDePoUAN7EmRySGZWe
+         * jdjpQ\/132","username":"Emin","token":"VNjQ8CokxBf4FwjBzdc3jCRl2GFzvHO3nET6H0kC","provided":["avatar_url"]});</script>
+
+         */
+
         $content = sprintf(
             '
-            <script>window.app.authenticationComplete(%s);</script>
+            window.location.href="https://bbs.hamzone.cn/?&wechat_user=+encodeURIComponent(JSON.stringify(%s));
             ',
             json_encode($payload)
         );
