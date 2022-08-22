@@ -94,9 +94,9 @@ class WXRespFactoryController extends ResponseFactory{
          */
 
         $content = sprintf(
-            '
+            '<script>
             window.location.href="https://bbs.hamzone.cn/?&wechat_user="+encodeURIComponent(JSON.stringify(%s));
-            ',
+            </script>',
             json_encode($payload)
         );
         app('log')->debug( $content );
