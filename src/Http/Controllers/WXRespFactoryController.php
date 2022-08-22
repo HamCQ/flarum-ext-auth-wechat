@@ -92,13 +92,23 @@ class WXRespFactoryController extends ResponseFactory{
          * jdjpQ\/132","username":"Emin","token":"VNjQ8CokxBf4FwjBzdc3jCRl2GFzvHO3nET6H0kC","provided":["avatar_url"]});</script>
 
          */
+        if(isset($payload["loggedIn"]) && $payload["loggedIn"]){
+            $content = sprintf(
+                '<script>
+                window.location.href="'.$url.'";
+                </script>',
+                json_encode($payload)
+            );
+        }else{
+            $content = sprintf(
+                '<script>
+                window.location.href="'.$url.'/?&wechat_user="+encodeURIComponent(JSON.stringify(%s));
+                </script>',
+                json_encode($payload)
+            );
+        }
 
-        $content = sprintf(
-            '<script>
-            window.location.href="https://bbs.hamzone.cn/?&wechat_user="+encodeURIComponent(JSON.stringify(%s));
-            </script>',
-            json_encode($payload)
-        );
+       
         app('log')->debug( $content );
         return new HtmlResponse($content);
     }
