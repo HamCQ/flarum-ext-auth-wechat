@@ -12,7 +12,7 @@ import LogInButtons from 'flarum/components/LogInButtons';
 import LogInButton from 'flarum/components/LogInButton';
 import Button from 'flarum/components/Button';
 
-app.initializers.add(`hamzone/${config.package.name}`, () => {
+app.initializers.add(`${config.package.name}`, () => {
 
     extend(SettingsPage.prototype, 'accountItems', (items) => {
         const {
