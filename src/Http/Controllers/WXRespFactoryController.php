@@ -1,5 +1,5 @@
 <?php
-namespace NomisCZ\WeChatAuth\Http\Controllers;
+namespace HamZone\WeChatAuth\Http\Controllers;
 
 use Flarum\Forum\Auth\ResponseFactory;
 use Flarum\Forum\Auth\Registration;

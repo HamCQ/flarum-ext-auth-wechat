@@ -23,7 +23,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "NomisCZ\\WeChatAuth\\": "src/"
+      "HamZone\\WeChatAuth\\": "src/"
     }
   },
   "extra": {

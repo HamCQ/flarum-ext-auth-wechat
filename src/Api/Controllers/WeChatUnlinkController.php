@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace NomisCZ\WeChatAuth\Api\Controllers;
+namespace HamZone\WeChatAuth\Api\Controllers;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ResponseInterface;
