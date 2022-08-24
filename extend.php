@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace NomisCZ\WeChatAuth;
+namespace HamZone\WeChatAuth;
 
 use Flarum\Api\Serializer\UserSerializer;
 use Flarum\Extend;
-use NomisCZ\WeChatAuth\Http\Controllers\WeChatAuthController;
-use NomisCZ\WeChatAuth\Api\Controllers\WeChatLinkController;
-use NomisCZ\WeChatAuth\Api\Controllers\WeChatUnlinkController;
+use HamZone\WeChatAuth\Http\Controllers\WeChatAuthController;
+use HamZone\WeChatAuth\Api\Controllers\WeChatLinkController;
+use HamZone\WeChatAuth\Api\Controllers\WeChatUnlinkController;
 use FoF\Components\Extend\AddFofComponents;
 
 return [
