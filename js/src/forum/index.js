@@ -4,7 +4,7 @@ import app from 'flarum/app';
 import config from '../config';
 
 import SettingsPage from 'flarum/components/SettingsPage';
-import Application from './components/Application';
+import WeChatApplication from './components/WeChatApplication';
 import UnlinkModal from "./components/UnlinkModal";
 import LinkModal from "./components/LinkModal";
 
@@ -12,7 +12,7 @@ import LogInButtons from 'flarum/components/LogInButtons';
 import LogInButton from 'flarum/components/LogInButton';
 import Button from 'flarum/components/Button';
 
-app.initializers.add(`nomiscz/${config.package.name}`, () => {
+app.initializers.add(`hamzone/${config.package.name}`, () => {
 
     extend(SettingsPage.prototype, 'accountItems', (items) => {
         const {
@@ -45,4 +45,4 @@ app.initializers.add(`nomiscz/${config.package.name}`, () => {
     });
 });
 
-app.wechat = new Application();
+app.wechat = new WeChatApplication();

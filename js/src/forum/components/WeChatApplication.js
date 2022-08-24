@@ -1,6 +1,6 @@
 import config from '../../config';
 
-export default class Application {
+export default class WeChatApplication {
     linkDone(returnCode) {
 
         let alert;
