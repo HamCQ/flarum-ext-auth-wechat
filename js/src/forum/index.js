@@ -1,8 +1,6 @@
 import { extend } from 'flarum/extend';
 import app from 'flarum/app';
 
-import config from '../config';
-
 import SettingsPage from 'flarum/components/SettingsPage';
 import WeChatApplication from './components/WeChatApplication';
 import UnlinkModal from "./components/UnlinkModal";
@@ -12,7 +10,7 @@ import LogInButtons from 'flarum/components/LogInButtons';
 import LogInButton from 'flarum/components/LogInButton';
 import Button from 'flarum/components/Button';
 
-app.initializers.add(`${config.package.name}`, () => {
+app.initializers.add('hamzone-auth-wechat', () => {
 
     extend(SettingsPage.prototype, 'accountItems', (items) => {
         const {
@@ -25,21 +23,21 @@ app.initializers.add(`${config.package.name}`, () => {
             },
         } = app.session.user;
 
-        items.add(`link${config.module.id}`,
-            <Button className={`Button ${config.module.id}Button--${isLinked ? 'danger' : 'success'}`} icon={config.module.icon}
+        items.add(`linkWeChatAuth`,
+            <Button className={`Button WeChatAuthButton--${isLinked ? 'danger' : 'success'}`} icon={'fab fa-weixin'}
                 path={`/auth/${name}`} onclick={() => app.modal.show(isLinked ? UnlinkModal : LinkModal)}>
-                {app.translator.trans(`${config.module.name}.forum.buttons.${isLinked ? 'unlink' : 'link'}`)}
+                {app.translator.trans(`hamzone-auth-wechat.forum.buttons.${isLinked ? 'unlink' : 'link'}`)}
             </Button>
         );
     });
 
     extend(LogInButtons.prototype, 'items', (items) => {
-        items.add(config.package.id,
+        items.add('WeChatAuth',
             <LogInButton
-                className={`Button LogInButton--${config.module.id}`}
-                icon={config.module.icon}
-                path={config.api.uri}>
-                {app.translator.trans(`${config.module.name}.forum.buttons.login`)}
+                className={`Button LogInButton--WeChatAuth`}
+                icon={'fab fa-weixin'}
+                path={'/auth/wechat'}>
+                {app.translator.trans('hamzone-auth-wechat.forum.buttons.login')}
             </LogInButton>
         );
     });
