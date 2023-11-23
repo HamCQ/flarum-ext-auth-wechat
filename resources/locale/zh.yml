@@ -1,4 +1,4 @@
-hamzone-auth-wechat:
+hamcq-auth-wechat:
   forum:
     buttons:
       login: 微信账号登录

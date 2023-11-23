@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace HamZone\WeChatAuth\Api\Controllers;
+namespace HamCQ\WeChatAuth\Api\Controllers;
 
 use Exception;
 use NomisCZ\OAuth2\Client\Provider\WeChat;

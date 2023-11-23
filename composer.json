@@ -1,5 +1,5 @@
 {
-  "name": "hamzone/flarum-ext-auth-wechat",
+  "name": "hamcq/flarum-ext-auth-wechat",
   "description": "Allow users to log in with WeChat",
   "keywords": [
     "flarum",
@@ -12,23 +12,23 @@
     "flarum/core": "^1.0.0",
     "laravel/helpers": "^v1.4.1",
     "fof/components": "^1.0.0",
-    "hamzone/oauth2-wechat": "^1.0"
+    "hamcq/oauth2-wechat": "^1.0"
   },
   "authors": [
     {
-      "name": "HamZone",
-      "email": "support@hamzone.cn",
+      "name": "Emin.lin",
+      "email": "emin.lin@live.com",
       "role": "Developer"
     }
   ],
   "autoload": {
     "psr-4": {
-      "HamZone\\WeChatAuth\\": "src/"
+      "HamCQ\\WeChatAuth\\": "src/"
     }
   },
   "extra": {
     "flarum-extension": {
-      "title": "HamZone WeChat Login",
+      "title": "HamCQ WeChat Login",
       "icon": {
         "name": "fab fa-weixin",
         "backgroundColor": "#51c332",

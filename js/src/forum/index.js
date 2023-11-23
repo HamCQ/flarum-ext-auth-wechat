@@ -10,7 +10,7 @@ import LogInButtons from 'flarum/components/LogInButtons';
 import LogInButton from 'flarum/components/LogInButton';
 import Button from 'flarum/components/Button';
 
-app.initializers.add('hamzone-auth-wechat', () => {
+app.initializers.add('hamcq-auth-wechat', () => {
 
     extend(SettingsPage.prototype, 'accountItems', (items) => {
         const {
@@ -26,7 +26,7 @@ app.initializers.add('hamzone-auth-wechat', () => {
         items.add(`linkWeChatAuth`,
             <Button className={`Button WeChatAuthButton--${isLinked ? 'danger' : 'success'}`} icon={'fab fa-weixin'}
                 path={`/auth/${name}`} onclick={() => app.modal.show(isLinked ? UnlinkModal : LinkModal)}>
-                {app.translator.trans(`hamzone-auth-wechat.forum.buttons.${isLinked ? 'unlink' : 'link'}`)}
+                {app.translator.trans(`hamcq-auth-wechat.forum.buttons.${isLinked ? 'unlink' : 'link'}`)}
             </Button>
         );
     });
@@ -37,7 +37,7 @@ app.initializers.add('hamzone-auth-wechat', () => {
                 className={`Button LogInButton--WeChatAuth`}
                 icon={'fab fa-weixin'}
                 path={'/auth/wechat'}>
-                {app.translator.trans('hamzone-auth-wechat.forum.buttons.login')}
+                {app.translator.trans('hamcq-auth-wechat.forum.buttons.login')}
             </LogInButton>
         );
     });

@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace HamZone\WeChatAuth\Http\Controllers;
+namespace HamCQ\WeChatAuth\Http\Controllers;
 
 use Exception;
-use HamZone\WeChatAuth\Http\Controllers\WXRespFactoryController;
+use HamCQ\WeChatAuth\Http\Controllers\WXRespFactoryController;
 
 use Flarum\Forum\Auth\Registration;
 use Flarum\Http\UrlGenerator;

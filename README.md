@@ -5,7 +5,7 @@
 
 安装方式：  
 
-composer require hamzone/flarum-ext-auth-wechat  
+composer require hamcq/flarum-ext-auth-wechat  
 
 ### 优化体验配置：  
 
@@ -16,7 +16,7 @@ composer require hamzone/flarum-ext-auth-wechat
 window.onload = function () {
     if(window.location.href.indexOf("wechat_user") != -1){
         if(app.data.session.userId!=""){
-         window.location.href ="https://bbs.hamzone.cn"
+         window.location.href ="https://forum.hamcq.cn"
         }
         var log=JSON.parse(decodeURIComponent(window.location.href.split("=")[1]));
         window.app.authenticationComplete(log);

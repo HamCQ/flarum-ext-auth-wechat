@@ -1,5 +1,5 @@
 <?php
-namespace HamZone\WeChatAuth\Http\Controllers;
+namespace HamCQ\WeChatAuth\Http\Controllers;
 
 use Flarum\Forum\Auth\ResponseFactory;
 use Flarum\Forum\Auth\Registration;
