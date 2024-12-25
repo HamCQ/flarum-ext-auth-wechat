@@ -72,7 +72,7 @@ class WXRespFactoryController extends ResponseFactory{
         ));
     }
 
-    private function makeResponse(array $payload): HtmlResponse
+    public function makeResponse(array $payload): HtmlResponse
     {
         $content = sprintf(
             '<script>window.close(); window.opener.app.authenticationComplete(%s);</script>',
@@ -81,7 +81,7 @@ class WXRespFactoryController extends ResponseFactory{
         return new HtmlResponse($content);
     }
 
-    private function makeWXResponse(array $payload, $url): HtmlResponse
+    public function makeWXResponse(array $payload, $url): HtmlResponse
     {
         // $content = "<script>window.location.href ='".$url."'</script>";
         /**
@@ -113,7 +113,7 @@ class WXRespFactoryController extends ResponseFactory{
         return new HtmlResponse($content);
     }
 
-    private function makeLoggedInResponse(User $user, bool $isMobile = false,string $url = "")
+    public function makeLoggedInResponse(User $user, bool $isMobile = false,string $url = "")
     {
         $response = $this->makeResponse(['loggedIn' => true]);
 

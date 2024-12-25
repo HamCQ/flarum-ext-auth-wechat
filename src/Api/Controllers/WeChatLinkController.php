@@ -144,14 +144,14 @@ class WeChatLinkController implements RequestHandlerInterface
         return $this->makeResponse($created ? 'done' : 'error');
     }
 
-    private function makeResponse($returnCode = 'done'): HtmlResponse
+    public function makeResponse($returnCode = 'done'): HtmlResponse
     {
         $content = "<script>window.close();window.opener.app.wechat.linkDone('{$returnCode}');</script>";
 
         return new HtmlResponse($content);
     }
 
-    private function makeWXResponse($url): HtmlResponse
+    public function makeWXResponse($url): HtmlResponse
     {
         $content = `<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
         绑定成功，正在跳转......`
@@ -161,7 +161,7 @@ class WeChatLinkController implements RequestHandlerInterface
         return new HtmlResponse($content);
     }
 
-    private function checkLoginProvider($identifier): bool
+    public function checkLoginProvider($identifier): bool
     {
         return $this->loginProvider->where([
             ['provider', 'wechat'],
